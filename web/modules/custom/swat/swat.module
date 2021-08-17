@@ -1,0 +1,58 @@
+<?php
+
+/**
+ * @file
+ * Implementing our hooks.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_theme().
+ */
+function swat_theme($existing, $type, $theme, $path) {
+  return [
+    'swat' => [
+      'variables' => ['items' => [], 'title' => '', 'form' => []],
+      'template' => 'swat-theme',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function swat_form_swat_add_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $form['name']['widget']['0']['value']['#ajax'] = [
+    'callback' => 'Drupal\swat\Controller\SwatController::nameAjaxCallback',
+    'event' => 'change',
+    'progress' => [
+      'type' => 'throbber',
+      'message' => NULL,
+    ],
+  ];
+  $form['email']['widget']['0']['value']['#ajax'] = [
+    'callback' => 'Drupal\swat\Controller\SwatController::emailAjaxCallback',
+    'event' => 'change',
+    'progress' => [
+      'type' => 'throbber',
+      'message' => NULL,
+    ],
+  ];
+  $form['tel']['widget']['0']['value']['#ajax'] = [
+    'callback' => 'Drupal\swat\Controller\SwatController::telAjaxCallback',
+    'event' => 'change',
+    'progress' => [
+      'type' => 'throbber',
+      'message' => NULL,
+    ],
+  ];
+  $form['feedback']['widget']['0']['value']['#ajax'] = [
+    'callback' => 'Drupal\swat\Controller\SwatController::feedbackAjaxCallback',
+    'event' => 'change',
+    'progress' => [
+      'type' => 'throbber',
+      'message' => NULL,
+    ],
+  ];
+}
